@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Logger;
 
 /**
  * Service class for sending emails related to password recovery.
@@ -21,6 +22,7 @@ public class EmailSenderService implements EmailSender {
 
     private final JavaMailSender javaMailSender;
     private final CodeGeneratorService codeGeneratorService;
+    private final Logger logger = Logger.getLogger(EmailSenderService.class.getName());
 
     // Configured to use a fixed thread pool of 10 threads to manage concurrent execution of email sending operations.
     private final ExecutorService executorService = Executors.newFixedThreadPool(10);
@@ -91,7 +93,7 @@ public class EmailSenderService implements EmailSender {
             try {
                 sendEmail(to, subject, htmlContent);
             } catch (MessagingException e) {
-                e.printStackTrace();
+                this.logger.warning("Failed to send email. " + e.getMessage());
             }
         });
     }
