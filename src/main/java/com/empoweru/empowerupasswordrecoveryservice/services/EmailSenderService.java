@@ -36,8 +36,8 @@ public class EmailSenderService implements EmailSender {
      */
     @Override
     public String sendRecoveryCode(String email) {
-        String subject = "Welcome to EmpowerU!";
         RecoveryCode recoverToken = codeGeneratorService.generate(email);
+        String subject = "Your code is: " + recoverToken.getCode();
 
         String htmlContent = """
                 <html>
@@ -88,7 +88,7 @@ public class EmailSenderService implements EmailSender {
      * @param subject The subject of the email.
      * @param htmlContent The HTML content of the email.
      */
-    private void sendEmailAsync(String to, String subject, String htmlContent) {
+    public void sendEmailAsync(String to, String subject, String htmlContent) {
         executorService.submit(() -> {
             try {
                 sendEmail(to, subject, htmlContent);
@@ -107,7 +107,7 @@ public class EmailSenderService implements EmailSender {
      * @param htmlContent The HTML content of the email.
      * @throws MessagingException if there is a failure in sending the email.
      */
-    private void sendEmail(String to, String subject, String htmlContent) throws MessagingException {
+    public void sendEmail(String to, String subject, String htmlContent) throws MessagingException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 
