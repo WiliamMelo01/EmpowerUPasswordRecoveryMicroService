@@ -29,7 +29,7 @@ The EmpowerU Password Recovery Microservice provides endpoints for managing user
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/YourUsername/EmpowerUPasswordRecoveryMicroService
+    git clone https://github.com/WiliamMelo01/EmpowerUPasswordRecoveryMicroService
     cd EmpowerUPasswordRecoveryMicroService
     ```
 
