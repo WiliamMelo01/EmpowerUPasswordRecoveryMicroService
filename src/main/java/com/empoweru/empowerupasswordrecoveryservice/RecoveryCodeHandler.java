@@ -1,5 +1,6 @@
 package com.empoweru.empowerupasswordrecoveryservice;
 
+import com.empoweru.empowerupasswordrecoveryservice.dtos.RequestPasswordRecoveryCodeDTO;
 import com.empoweru.empowerupasswordrecoveryservice.dtos.VerifyCodeDto;
 import com.empoweru.empowerupasswordrecoveryservice.repositories.UserRepository;
 import com.empoweru.empowerupasswordrecoveryservice.services.EmailSender;
@@ -35,10 +36,16 @@ public class RecoveryCodeHandler {
      */
     @FunctionName("sendRecoveryCode")
     public HttpResponseMessage sendRecoveryCode(
-            @HttpTrigger(name = "request", methods = {HttpMethod.POST}, authLevel = AuthorizationLevel.ANONYMOUS) HttpRequestMessage<Optional<String>> request,
+            @HttpTrigger(name = "request", methods = {HttpMethod.POST}, authLevel = AuthorizationLevel.ANONYMOUS) HttpRequestMessage<Optional<RequestPasswordRecoveryCodeDTO>> request,
             ExecutionContext context){
-        String email = request.getBody()
-                .orElseThrow(() -> new IllegalArgumentException("Email not provided"));
+        RequestPasswordRecoveryCodeDTO requestBody = request.getBody()
+                .orElseThrow(() -> new IllegalArgumentException("Invalid request body"));
+
+        String email = requestBody.getEmail();
+
+        if (email == null || email.isEmpty()) {
+            return createResponse(request, "Email is required!", HttpStatus.BAD_REQUEST);
+        }
 
         if (!userRepository.existsByEmail(email)) {
             return createResponse(request, "Email not found!", HttpStatus.NOT_FOUND);
