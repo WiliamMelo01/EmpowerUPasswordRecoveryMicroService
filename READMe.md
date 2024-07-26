@@ -15,7 +15,7 @@ The EmpowerU Password Recovery Microservice provides endpoints for managing user
 - `Java`
 - `Spring Boot`
 - `PostgreSQL`
-- 
+
 ## Setup
 
 - Java 17 or higher
