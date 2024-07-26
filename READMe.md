@@ -78,6 +78,10 @@ The EmpowerU Password Recovery Microservice provides endpoints for managing user
     ```bash
     func start
     ```
+    
+    - By default, the Azure Function will run on port `7071` when executed locally. You can access the endpoints at `http://localhost:7071/api/sendRecoveryCode` and `http://localhost:7071/api/verifyRecoveryCode`.
+    - If you need to change the port, use the `--port` option followed by your desired port number, e.g., `func start --port 8080` to run the function on port `8080`.
+
 ## Usage
 
 To use the microservice:
